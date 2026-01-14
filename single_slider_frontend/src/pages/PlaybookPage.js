@@ -211,18 +211,7 @@ function PlaybookPage() {
                         </div>
                       </div>
 
-                      <button
-                        type="button"
-                        className={styles.copyLinkBtn}
-                        onClick={() => {
-                          const url = `${window.location.origin}${window.location.pathname}#level-${l.n}-phase-${p.key}`;
-                          navigator.clipboard?.writeText(url).catch(() => {});
-                        }}
-                        aria-label={`Copy link to Level ${l.n} Phase ${p.key}`}
-                        title="Copy deep link"
-                      >
-                        Copy link
-                      </button>
+
                     </div>
 
                     <ul className={styles.bullets} aria-label={`Outcomes for Level ${l.n} Phase ${p.key}`}>
