@@ -143,10 +143,24 @@ function LevelsPage() {
           </div>
 
           <div className={styles.cgaNote} role="note" aria-label="CGA phases note">
-            <span className={styles.cgaNoteTitle}>CGA phases:</span>{" "}
-            <strong>Analyze</strong> clarify the problem and constraints; <strong>Design</strong> define the approach and
-            plan; <strong>Implement</strong> generate and integrate changes; <strong>Verify</strong> test, debug, and
-            review outcomes.
+            <div className={styles.cgaNoteTitle} id="cga-phases-title">
+              CGA phases:
+            </div>
+
+            <ul className={styles.cgaBullets} aria-labelledby="cga-phases-title">
+              <li>
+                <strong>Analyze:</strong> Clarify the problem and constraints
+              </li>
+              <li>
+                <strong>Design:</strong> Define the approach and plan
+              </li>
+              <li>
+                <strong>Implement:</strong> Generate and integrate changes
+              </li>
+              <li>
+                <strong>Verify:</strong> Test, debug, and review outcomes
+              </li>
+            </ul>
           </div>
 
           <footer className={styles.footer}>
