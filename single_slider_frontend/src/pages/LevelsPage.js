@@ -126,16 +126,13 @@ function LevelsPage() {
                     <div
                       key={p.key}
                       className={styles.phaseChip}
-                      aria-label={`Phase ${p.key}: ${p.label}`}
-                      title={`Phase ${p.key}: ${p.label}`}
+                      aria-label={`${p.label} phase`}
+                      title={p.label}
                     >
                       <span className={styles.phaseIcon} aria-hidden="true">
                         {p.icon}
                       </span>
                       <span className={styles.phaseText}>
-                        <span className={styles.phaseKey} aria-hidden="true">
-                          {p.key}
-                        </span>
                         <span className={styles.phaseLabel}>{p.label}</span>
                       </span>
                     </div>
@@ -143,6 +140,13 @@ function LevelsPage() {
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className={styles.cgaNote} role="note" aria-label="CGA phases note">
+            <span className={styles.cgaNoteTitle}>CGA phases:</span>{" "}
+            <strong>Analyze</strong> clarify the problem and constraints; <strong>Design</strong> define the approach and
+            plan; <strong>Implement</strong> generate and integrate changes; <strong>Verify</strong> test, debug, and
+            review outcomes.
           </div>
 
           <footer className={styles.footer}>

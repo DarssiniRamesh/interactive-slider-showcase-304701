@@ -310,6 +310,22 @@
   font-weight: 700;
 }
 
+.cgaNote {
+  margin-top: 12px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.10);
+  border-radius: 14px;
+  padding: 10px 12px;
+  color: rgba(17, 24, 39, 0.86);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.cgaNoteTitle {
+  font-weight: 900;
+  color: rgba(122, 47, 16, 0.95);
+}
+
 .footer {
   margin-top: 14px;
   border-top: 1px solid var(--k-border);
