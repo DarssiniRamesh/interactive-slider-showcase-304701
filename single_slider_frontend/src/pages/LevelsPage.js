@@ -123,12 +123,20 @@ function LevelsPage() {
 
                 <div className={styles.phaseRow} aria-label={`Phases for Level ${l.n}`}>
                   {PHASES.map((p) => (
-                    <div key={p.key} className={styles.phaseChip} aria-label={`Phase ${p.key}: ${p.label}`}>
+                    <div
+                      key={p.key}
+                      className={styles.phaseChip}
+                      aria-label={`Phase ${p.key}: ${p.label}`}
+                      title={`Phase ${p.key}: ${p.label}`}
+                    >
                       <span className={styles.phaseIcon} aria-hidden="true">
                         {p.icon}
                       </span>
                       <span className={styles.phaseText}>
-                        <span className={styles.phaseKey}> {p.key} </span>
+                        <span className={styles.phaseKey} aria-hidden="true">
+                          {p.key}
+                        </span>
+                        <span className={styles.phaseLabel}>{p.label}</span>
                       </span>
                     </div>
                   ))}
