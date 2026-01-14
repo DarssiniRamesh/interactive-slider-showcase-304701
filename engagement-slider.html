@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="Engagement Levels (1–4) × Phases (A–D) slider" />
+  <title>Kavia Engagement Slider (Levels 1–4 × Phases A–D)</title>
+
+  <!-- Inter font, mirroring the repo's template choice -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #fff7f0;
+      --surface-3: #fff2e8;
+      --border: rgba(17, 24, 39, 0.12);
+      --border-strong: rgba(17, 24, 39, 0.18);
+      --text: #111827; /* black-ish */
+      --muted: rgba(17, 24, 39, 0.70);
+
+      --accent: #F59E0B; /* warm amber */
+      --accent-2: #E87A41; /* kavia-like orange */
+      --accent-soft: rgba(232, 122, 65, 0.12);
+      --accent-soft-2: rgba(245, 158, 11, 0.14);
+
+      --shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
+      --shadow-sm: 0 6px 14px rgba(17, 24, 39, 0.08);
+
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+
+      --maxw: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 500px at 30% -10%, var(--accent-soft) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(1000px 520px at 90% 10%, var(--accent-soft-2) 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, #ffffff 0%, #fffdfb 100%);
+    }
+
+    a { color: inherit; }
+
+    .page{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 28px 18px 44px 18px;
+    }
+
+    .header{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .title{
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 86ch;
+    }
+
+    .shell{
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .topbar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface-2) 0%, rgba(255,255,255,0.9) 100%);
+    }
+
+    .badges{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.9);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .badge strong{
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      border: 1px solid rgba(232, 122, 65, 0.35);
+      background: rgba(232, 122, 65, 0.12);
+      color: #7a2f10;
+    }
+
+    .content{
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 980px){
+      .content{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .panelHeader{
+      padding: 14px 14px 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,242,232,0.9) 0%, rgba(255,255,255,0.95) 100%);
+    }
+
+    .panelHeader h2{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(17,24,39,0.78);
+      font-weight: 700;
+    }
+
+    .panelBody{
+      padding: 14px;
+    }
+
+    .controls{
+      display: grid;
+      gap: 14px;
+    }
+
+    .controlRow{
+      display: grid;
+      gap: 8px;
+    }
+
+    .controlRow label{
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .controlRow label span{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .controlRow label strong{
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .range{
+      width: 100%;
+      accent-color: var(--accent-2);
+    }
+
+    .segmented{
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 520px){
+      .segmented{ grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .segBtn{
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      padding: 10px 10px;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+      text-align: left;
+      min-height: 56px;
+    }
+
+    .segBtn:hover{
+      transform: translateY(-1px);
+      border-color: var(--border-strong);
+      box-shadow: 0 8px 18px rgba(17,24,39,0.10);
+    }
+
+    .segBtn[aria-pressed="true"]{
+      border-color: rgba(232, 122, 65, 0.55);
+      background: linear-gradient(180deg, rgba(232, 122, 65, 0.16) 0%, rgba(255,255,255,0.95) 100%);
+      box-shadow: 0 10px 20px rgba(232, 122, 65, 0.12);
+    }
+
+    .segTop{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .segTitle{
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .segKey{
+      font-size: 11px;
+      color: rgba(122,47,16,0.9);
+      border: 1px solid rgba(232, 122, 65, 0.35);
+      background: rgba(232, 122, 65, 0.10);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .segDesc{
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .gridHint{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .detailsTitle{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .detailsTitle h3{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .detailsMeta{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .metaChip{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.9);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .metaChip strong{
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .section{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(17,24,39,0.18);
+    }
+
+    .section h4{
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(17,24,39,0.75);
+    }
+
+    .para{
+      margin: 0 0 10px 0;
+      color: rgba(17,24,39,0.86);
+      line-height: 1.55;
+      font-size: 13.5px;
+    }
+
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(17,24,39,0.86);
+      line-height: 1.55;
+      font-size: 13.5px;
+    }
+
+    .list li{ margin: 6px 0; }
+
+    .callout{
+      margin-top: 10px;
+      border: 1px solid rgba(232, 122, 65, 0.35);
+      background: rgba(232, 122, 65, 0.10);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      color: rgba(17,24,39,0.88);
+    }
+
+    .callout b{
+      color: rgba(122,47,16,0.95);
+    }
+
+    .footer{
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.9);
+      border-radius: 8px;
+      padding: 2px 6px;
+      color: rgba(17,24,39,0.85);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <h1 class="title">Kavia Engagement Slider (Levels 1–4 × Phases A–D)</h1>
+      <p class="subtitle">
+        This is a single-page view of how Kavia can participate in software development through increasing engagement levels.
+        Each engagement level includes the same internal phases (A–D), so you can move vertically (level) and horizontally (phase)
+        to see what changes in tooling, workflows, and outcomes.
+      </p>
+    </header>
+
+    <section class="shell" aria-label="Engagement slider">
+      <div class="topbar">
+        <div class="badges" aria-label="Legend">
+          <span class="pill">Light orange / white theme</span>
+          <span class="badge"><strong>Levels:</strong> 1 (Local) → 4 (Fully managed)</span>
+          <span class="badge"><strong>Phases:</strong> A (Analysis) → D (Verify + Review)</span>
+        </div>
+        <div class="badge" title="Keyboard tips">
+          Tip: Use <span class="kbd">Tab</span> then <span class="kbd">Arrow keys</span> to adjust sliders.
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- Controls -->
+        <section class="panel" aria-label="Controls">
+          <div class="panelHeader">
+            <h2>Controls</h2>
+          </div>
+          <div class="panelBody">
+            <div class="controls">
+              <div class="controlRow">
+                <label for="levelRange">
+                  <span>
+                    Engagement level:
+                    <strong id="levelLabel">Level 1</strong>
+                  </span>
+                  <span class="pill" id="levelShort"></span>
+                </label>
+                <input class="range" id="levelRange" type="range" min="1" max="4" step="1" value="1" />
+                <div class="gridHint" id="levelHint"></div>
+              </div>
+
+              <div class="controlRow">
+                <label for="phaseRange">
+                  <span>
+                    Phase:
+                    <strong id="phaseLabel">Phase A</strong>
+                  </span>
+                  <span class="pill" id="phaseShort"></span>
+                </label>
+                <input class="range" id="phaseRange" type="range" min="1" max="4" step="1" value="1" />
+                <div class="segmented" aria-label="Phase quick select" id="phaseButtons">
+                  <!-- buttons inserted by JS -->
+                </div>
+                <div class="gridHint">
+                  Phases are consistent across all engagement levels: A = Nascent Analysis, B = Documentation/Design,
+                  C = Implement + Integrate, and D = Verify + Review.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Details -->
+        <section class="panel" aria-label="Details">
+          <div class="panelHeader">
+            <h2>Details</h2>
+          </div>
+          <div class="panelBody" id="details">
+            <!-- populated by JS -->
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const phases = [
+      {
+        key: "A",
+        name: "Nascent Analysis",
+        oneLiner: "Clarify the goal and constraints before changing code.",
+        anchors: [
+          "Goal articulation and success criteria.",
+          "Constraints (stack, timeline, scope) and risks.",
+          "High-level plan for what will be generated or modified."
+        ]
+      },
+      {
+        key: "B",
+        name: "Documentation / Design",
+        oneLiner: "Turn intent into specs and implementation flow.",
+        anchors: [
+          "Detailed design / feature specs and flow documents.",
+          "Breakdown by module or component boundaries.",
+          "Acceptance criteria and review checkpoints."
+        ]
+      },
+      {
+        key: "C",
+        name: "Implement + Integrate",
+        oneLiner: "Generate and integrate code module-wise, then stabilize.",
+        anchors: [
+          "Module-wise implementation and integration.",
+          "Auto-fixes for compilation or lint issues.",
+          "Iterative regeneration where necessary."
+        ]
+      },
+      {
+        key: "D",
+        name: "Verify + Review",
+        oneLiner: "Test generation, execution, and review of outcomes.",
+        anchors: [
+          "Test generation for developed modules.",
+          "Test execution and debugging of failures.",
+          "Review documentation of what changed and why."
+        ]
+      }
+    ];
+
+    // The engagement levels are derived from the attachment and refined into clearer content.
+    // Each level includes: what it means, what you run where, and how phases A–D show up in practice.
+    const levels = [
+      {
+        n: 1,
+        title: "Code Generation with Local Build",
+        short: "No manifest; local build & local test",
+        description:
+          "You connect a repo and use Kavia primarily for code generation. Builds and tests are run locally by the developer. This level focuses on accelerating changes without requiring Kavia to manage the build pipeline.",
+        environment:
+          "No Kavia manifest is required. The developer runs build and test commands locally (for example, via local CLI, IDE, or emulator tooling).",
+        phaseDetails: {
+          A: {
+            what: "Define the goal, scope, and constraints for the code generation request before any changes are applied.",
+            outcomes: [
+              "A clear problem statement and expected outcome.",
+              "Known constraints such as target platform, dependencies, and repo conventions.",
+              "A minimal plan that Kavia can follow to generate changes safely."
+            ]
+          },
+          B: {
+            what: "Produce feature specs or design notes that describe the solution and the implementation flow, usually in a module-wise breakdown.",
+            outcomes: [
+              "Detailed Design / Feature Spec documentation.",
+              "Implementation Flow Document (what changes where and why).",
+              "A reviewable structure before code is generated."
+            ]
+          },
+          C: {
+            what: "Generate code in a module-wise manner and integrate it into the existing repo, then iterate locally until it compiles.",
+            outcomes: [
+              "Generated changes applied by module to minimize disruption.",
+              "Integration adjustments such as imports, wiring, and config updates.",
+              "Local build confirms compilation with developer-driven fixes if needed."
+            ]
+          },
+          D: {
+            what: "Generate tests and run them locally to validate behavior, then capture a review summary of what was implemented.",
+            outcomes: [
+              "Unit/integration tests generated for the developed modules.",
+              "Local test execution and debugging of failures.",
+              "Review notes summarizing changes, assumptions, and next steps."
+            ]
+          }
+        }
+      },
+      {
+        n: 2,
+        title: "CI + Build Defined via Kavia Manifest (Run Locally)",
+        short: "Manifest-based build command; still run locally",
+        description:
+          "You introduce a Kavia manifest that defines the build command (and potentially CI steps). The key difference is that Kavia now knows how to build the project, enabling tighter feedback loops for compilation correctness, even if execution is still local.",
+        environment:
+          "A Kavia manifest exists. Build commands are defined through the manifest, but the developer still runs builds locally (for example, Android builds on an emulator machine).",
+        phaseDetails: {
+          A: {
+            what: "Align on build expectations and constraints so generated code targets the correct build pipeline configuration.",
+            outcomes: [
+              "Build command(s) and target environments understood via manifest.",
+              "Risks identified for compilation, dependency, and configuration mismatches.",
+              "A plan that explicitly optimizes for no-compilation-errors."
+            ]
+          },
+          B: {
+            what: "Document the intended changes and the build-impacting decisions so reviewers can validate before code generation continues.",
+            outcomes: [
+              "Design/spec updates that reflect build and CI expectations.",
+              "Implementation plan includes config changes if required.",
+              "Acceptance criteria includes compile/build checks."
+            ]
+          },
+          C: {
+            what: "Generate code and apply auto-fixes geared toward compilation success, iterating until the local manifest-defined build passes.",
+            outcomes: [
+              "Code generation plus compilation-oriented adjustments.",
+              "Auto-fixes for imports, build scripts, and minor integration issues.",
+              "Local build is run against the manifest-defined command."
+            ]
+          },
+          D: {
+            what: "Validate with tests (still executed locally) and provide a review artifact tying build outputs to the generated changes.",
+            outcomes: [
+              "Tests generated for the changed modules and key edges.",
+              "Local test execution complements compilation verification.",
+              "Review summary includes build confirmation and known limitations."
+            ]
+          }
+        }
+      },
+      {
+        n: 3,
+        title: "Level 2 + Preview/Run Through Kavia",
+        short: "Manifest + Kavia preview for runtime feedback",
+        description:
+          "In addition to manifest-defined builds, you also run and preview through Kavia. This introduces runtime feedback, enabling faster fixes for issues that only appear when the app actually runs. It also supports parallel review by users or stakeholders while fixes are being applied.",
+        environment:
+          "Same as Level 2, plus the project is run/previewed through Kavia for runtime validation and collaborative review.",
+        phaseDetails: {
+          A: {
+            what: "Define the runtime scenarios that must work so Kavia can prioritize fixes beyond compilation.",
+            outcomes: [
+              "Key user flows and runtime expectations captured.",
+              "A shortlist of areas to watch (startup, navigation, critical screens).",
+              "A plan that includes both build and runtime checkpoints."
+            ]
+          },
+          B: {
+            what: "Document the flows and runtime acceptance criteria, so preview feedback maps cleanly to actionable changes.",
+            outcomes: [
+              "Feature specs include runtime behaviors and acceptance criteria.",
+              "Implementation flow notes highlight integration touchpoints.",
+              "A review structure for stakeholders during preview."
+            ]
+          },
+          C: {
+            what: "Implement and integrate, then iterate using preview feedback to address runtime errors and UX regressions.",
+            outcomes: [
+              "Code generation and integration as in Level 2.",
+              "Runtime fixes informed by preview results (crashes, broken states).",
+              "Faster iteration while reviewers can see progress in parallel."
+            ]
+          },
+          D: {
+            what: "Verify via tests and review using both build outcomes and runtime preview evidence, producing a clearer release-ready narrative.",
+            outcomes: [
+              "Tests generated for core logic and integration points.",
+              "Run/preview evidence used to validate real execution paths.",
+              "Review summary includes runtime fixes and any remaining risks."
+            ]
+          }
+        }
+      },
+      {
+        n: 4,
+        title: "Fully Managed (Build + Run + Tests Through Kavia)",
+        short: "End-to-end managed: commands + tests via Kavia",
+        description:
+          "Kavia manages the full loop: code generation, build, run commands, and test execution through Kavia. This is the highest engagement level, emphasizing end-to-end validation and rapid stabilization with minimal developer-side orchestration.",
+        environment:
+          "All of the above, plus commands and tests are executed through Kavia (fully managed).",
+        phaseDetails: {
+          A: {
+            what: "Define end-to-end goals, required validations, and operational constraints so the managed loop targets real release readiness.",
+            outcomes: [
+              "Clear end-to-end definition of done (build, run, tests).",
+              "Constraints for environments, secrets, and tooling clarified.",
+              "A plan that schedules automated verifications per milestone."
+            ]
+          },
+          B: {
+            what: "Produce strong specs and implementation flows that explicitly connect to managed execution, enabling reliable automation.",
+            outcomes: [
+              "Specs include commands, environments, and expected outputs.",
+              "Implementation flow describes integration and operational steps.",
+              "Review checkpoints are aligned with managed test results."
+            ]
+          },
+          C: {
+            what: "Implement and integrate with Kavia executing commands and applying iterative fixes quickly to reach stable builds and runnable states.",
+            outcomes: [
+              "Module-wise implementation with continuous managed feedback.",
+              "Auto-fix loops for compilation and runtime issues.",
+              "Integration stabilized with repeatable command execution."
+            ]
+          },
+          D: {
+            what: "Generate tests and execute them through Kavia; use failures to drive fixes until the suite is green, then finalize review artifacts.",
+            outcomes: [
+              "Test generation for developed modules and key regressions.",
+              "Test execution through Kavia with actionable reporting.",
+              "Final review summary suitable for handoff, audit, or release notes."
+            ]
+          }
+        }
+      }
+    ];
+
+    const levelRange = document.getElementById("levelRange");
+    const phaseRange = document.getElementById("phaseRange");
+    const levelLabel = document.getElementById("levelLabel");
+    const phaseLabel = document.getElementById("phaseLabel");
+    const levelShort = document.getElementById("levelShort");
+    const phaseShort = document.getElementById("phaseShort");
+    const levelHint = document.getElementById("levelHint");
+    const details = document.getElementById("details");
+    const phaseButtons = document.getElementById("phaseButtons");
+
+    function getLevel(n){
+      return levels.find(l => l.n === n) || levels[0];
+    }
+
+    function getPhaseByIndex(idx){
+      return phases[idx - 1] || phases[0];
+    }
+
+    function renderPhaseButtons(){
+      phaseButtons.innerHTML = "";
+      phases.forEach((p, i) => {
+        const btn = document.createElement("button");
+        btn.className = "segBtn";
+        btn.type = "button";
+        btn.setAttribute("data-phase-index", String(i + 1));
+        btn.setAttribute("aria-pressed", "false");
+
+        const top = document.createElement("div");
+        top.className = "segTop";
+
+        const title = document.createElement("div");
+        title.className = "segTitle";
+        title.textContent = `Phase ${p.key}`;
+
+        const key = document.createElement("div");
+        key.className = "segKey";
+        key.textContent = p.name;
+
+        top.appendChild(title);
+        top.appendChild(key);
+
+        const desc = document.createElement("p");
+        desc.className = "segDesc";
+        desc.textContent = p.oneLiner;
+
+        btn.appendChild(top);
+        btn.appendChild(desc);
+
+        btn.addEventListener("click", () => {
+          phaseRange.value = String(i + 1);
+          update();
+        });
+
+        phaseButtons.appendChild(btn);
+      });
+    }
+
+    function renderDetails(levelN, phaseIdx){
+      const level = getLevel(levelN);
+      const phase = getPhaseByIndex(phaseIdx);
+
+      const phaseKey = phase.key;
+      const phaseContent = level.phaseDetails[phaseKey];
+
+      // Build a hint that summarizes "what changes" as engagement increases.
+      const hintByLevel = {
+        1: "Kavia helps primarily with analysis, docs, code generation, and test generation. You compile/run tests locally.",
+        2: "Kavia understands how to build via manifest. You still run locally, but generation focuses on compilation correctness.",
+        3: "Adds Kavia preview/run for runtime feedback and parallel review.",
+        4: "Kavia manages build, run, and test execution end-to-end (fully managed)."
+      };
+
+      levelLabel.textContent = `Level ${level.n}`;
+      phaseLabel.textContent = `Phase ${phase.key}`;
+      levelShort.textContent = level.title;
+      phaseShort.textContent = phase.name;
+      levelHint.textContent = hintByLevel[level.n] || "";
+
+      // Update pressed state of phase buttons
+      [...phaseButtons.querySelectorAll(".segBtn")].forEach(btn => {
+        const idx = Number(btn.getAttribute("data-phase-index"));
+        btn.setAttribute("aria-pressed", idx === phaseIdx ? "true" : "false");
+      });
+
+      details.innerHTML = `
+        <div class="detailsTitle">
+          <h3>Level ${level.n}: ${escapeHtml(level.title)} · Phase ${phase.key}: ${escapeHtml(phase.name)}</h3>
+          <div class="detailsMeta">
+            <span class="metaChip"><strong>Engagement</strong> ${level.n}/4</span>
+            <span class="metaChip"><strong>Phase</strong> ${phase.key}/D</span>
+            <span class="metaChip"><strong>Theme</strong> Light orange accents</span>
+          </div>
+        </div>
+
+        <p class="para">${escapeHtml(level.description)}</p>
+
+        <div class="section">
+          <h4>Engagement setup (what this level implies)</h4>
+          <p class="para">${escapeHtml(level.environment)}</p>
+          <div class="callout">
+            <b>Reminder:</b> Each engagement level follows the same internal A–D phases; the difference is how much of the build/run/test loop is defined and executed through Kavia.
+          </div>
+        </div>
+
+        <div class="section">
+          <h4>Phase focus (A–D) for this selection</h4>
+          <p class="para">${escapeHtml(phaseContent.what)}</p>
+          <p class="para" style="margin-bottom:8px;"><b>Expected outputs at this point:</b></p>
+          <ul class="list">
+            ${phaseContent.outcomes.map(o => `<li>${escapeHtml(o)}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="section">
+          <h4>Phase anchors (stable across all levels)</h4>
+          <p class="para">These anchors describe the intent of Phase ${phase.key} regardless of engagement level.</p>
+          <ul class="list">
+            ${phase.anchors.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="footer">
+          This HTML document is self-contained and intended as a “planned slider view” for review.
+          If you later want the same UI embedded into the React app, the content model in this file can be ported into a component with minimal changes.
+        </div>
+      `;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("\"", "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function update(){
+      const levelN = Number(levelRange.value);
+      const phaseIdx = Number(phaseRange.value);
+      renderDetails(levelN, phaseIdx);
+    }
+
+    renderPhaseButtons();
+    update();
+
+    levelRange.addEventListener("input", update);
+    phaseRange.addEventListener("input", update);
+  </script>
+</body>
+</html>
