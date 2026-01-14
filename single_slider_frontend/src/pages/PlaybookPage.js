@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./PlaybookPage.module.css";
 
@@ -34,8 +34,7 @@ const LEVELS = [
     n: 1,
     title: "Code Generation with Local Validation",
     short: "You run builds locally; Kavia generates code and docs.",
-    description:
-      "You run builds locally; Kavia generates code and docs.",
+    description: "You run builds locally; Kavia generates code and docs.",
     phases: {
       A: ["Goal articulation and success criteria", "Constraints, scope, and risks", "High-level implementation plan"],
       B: ["Feature spec / design notes", "Module-wise breakdown", "Acceptance criteria and review checkpoints"],
@@ -47,8 +46,7 @@ const LEVELS = [
     n: 2,
     title: "CI-Ready Build Governance",
     short: "Standard build commands defined; compile issues blocked early.",
-    description:
-      "Standard build commands defined; compile issues blocked early.",
+    description: "Standard build commands defined; compile issues blocked early.",
     phases: {
       A: ["Confirm build targets via manifest", "Identify compile/config risks", "Plan emphasizes no-compilation-errors"],
       B: ["Docs include build-impact decisions", "Implementation plan includes config changes", "Criteria includes build checks"],
@@ -60,8 +58,7 @@ const LEVELS = [
     n: 3,
     title: "Preview-Backed Runtime Validation",
     short: "Preview verifies runtime behavior and speeds review.",
-    description:
-      "Preview verifies runtime behavior and speeds review.",
+    description: "Preview verifies runtime behavior and speeds review.",
     phases: {
       A: ["Define critical runtime scenarios", "Capture flows to validate (startup, navigation)", "Plan includes runtime checkpoints"],
       B: ["Document runtime behaviors + acceptance criteria", "Highlight integration touchpoints", "Structure for stakeholder review"],
@@ -73,8 +70,7 @@ const LEVELS = [
     n: 4,
     title: "Fully Managed Execution & Test Automation",
     short: "Builds, previews, and tests run within Kavia.",
-    description:
-      "Builds, previews, and tests run within Kavia.",
+    description: "Builds, previews, and tests run within Kavia.",
     phases: {
       A: ["Define end-to-end definition of done", "Clarify operational constraints (env/secrets/tools)", "Plan schedules automated verification"],
       B: ["Specs include commands + expected outputs", "Flow documents align with automation", "Review checkpoints tied to managed results"],
@@ -84,17 +80,67 @@ const LEVELS = [
   }
 ];
 
-function scrollToSection(sectionId) {
-  const el = document.getElementById(sectionId);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
+function parseLevelHash() {
+  const hash = (window.location.hash || "").toLowerCase();
+  const match = hash.match(/^#l([1-4])$/);
+  if (!match) return null;
+  return Number(match[1]);
+}
+
+function toLevelHash(levelN) {
+  return `#l${levelN}`;
 }
 
 // PUBLIC_INTERFACE
 function PlaybookPage() {
-  const [activeLevel, setActiveLevel] = useState(2);
+  const tabRefs = useRef([]);
+  const [activeLevel, setActiveLevel] = useState(() => parseLevelHash() ?? 2);
 
   const active = useMemo(() => LEVELS.find((l) => l.n === activeLevel) ?? LEVELS[1], [activeLevel]);
+
+  // Keep deep-linking behavior: if a user lands on /playbook#l3, show L3; if they switch tabs, update hash.
+  useEffect(() => {
+    const onHashChange = () => {
+      const levelFromHash = parseLevelHash();
+      if (levelFromHash && levelFromHash !== activeLevel) {
+        setActiveLevel(levelFromHash);
+      }
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [activeLevel]);
+
+  useEffect(() => {
+    // Avoid noisy history entries while tabbing; replace keeps back button behavior sane.
+    const desired = toLevelHash(activeLevel);
+    if (window.location.hash !== desired) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${desired}`);
+    }
+  }, [activeLevel]);
+
+  const onTabKeyDown = (e) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight" && e.key !== "Home" && e.key !== "End") return;
+
+    e.preventDefault();
+
+    const currentIndex = LEVELS.findIndex((l) => l.n === activeLevel);
+    if (currentIndex < 0) return;
+
+    let nextIndex = currentIndex;
+
+    if (e.key === "ArrowLeft") nextIndex = (currentIndex - 1 + LEVELS.length) % LEVELS.length;
+    if (e.key === "ArrowRight") nextIndex = (currentIndex + 1) % LEVELS.length;
+    if (e.key === "Home") nextIndex = 0;
+    if (e.key === "End") nextIndex = LEVELS.length - 1;
+
+    const nextLevel = LEVELS[nextIndex];
+    setActiveLevel(nextLevel.n);
+
+    // Roving focus to keep keyboard interaction consistent with WAI-ARIA authoring practices.
+    const nextEl = tabRefs.current[nextIndex];
+    if (nextEl) nextEl.focus();
+  };
 
   return (
     <main className={styles.page}>
@@ -102,7 +148,7 @@ function PlaybookPage() {
         <div>
           <h1 className={styles.title}>Playbook</h1>
           <p className={styles.subtitle}>
-            Detailed guidance for each Level (1–4) and phases A–D. Use the left navigation to jump.
+            Detailed guidance for each Level (1–4) and phases A–D. Switch levels with the tabs below.
           </p>
         </div>
 
@@ -114,116 +160,95 @@ function PlaybookPage() {
       </header>
 
       <section className={styles.shell} aria-label="Playbook content">
-        <aside className={styles.sidebar} aria-label="Playbook table of contents">
-          <div className={styles.sidebarHeader}>Levels</div>
-
-          <nav className={styles.levelNav}>
-            {LEVELS.map((l) => (
-              <button
-                key={l.n}
-                type="button"
-                className={styles.levelBtn}
-                data-active={l.n === activeLevel ? "true" : "false"}
-                onClick={() => {
-                  setActiveLevel(l.n);
-                  scrollToSection(`level-${l.n}`);
-                }}
-                aria-label={`Jump to Level ${l.n}: ${l.title}`}
-              >
-                <div className={styles.levelBtnTop}>
-                  <span className={styles.levelPill}>Level {l.n}</span>
-                  <span className={styles.levelBtnTitle}>{l.title}</span>
-                </div>
-                <div className={styles.levelBtnSub}>{l.short}</div>
-              </button>
-            ))}
-          </nav>
-
-          <div className={styles.sidebarDivider} />
-
-          <div className={styles.sidebarHeader}>Phases</div>
-          <div className={styles.phaseNav} role="list" aria-label="Phase quick jump (within active level)">
-            {PHASES.map((p) => (
-              <button
-                key={p.key}
-                type="button"
-                className={styles.phaseBtn}
-                onClick={() => scrollToSection(`level-${activeLevel}-phase-${p.key}`)}
-                aria-label={`Jump to Phase ${p.key}: ${p.name} within Level ${activeLevel}`}
-              >
-                <span className={styles.phaseIcon} aria-hidden="true">
-                  {p.icon}
-                </span>
-                <span className={styles.phaseBtnText}>
-                  <span className={styles.phaseKey}>Phase {p.key}</span>
-                  <span className={styles.phaseName}>{p.name}</span>
-                </span>
-              </button>
-            ))}
-          </div>
-        </aside>
-
         <div className={styles.content} aria-label="Playbook details">
           <div className={styles.callout} role="note" aria-label="Playbook note">
             <strong>Note:</strong> Phases A–D are consistent across all engagement levels; what changes is how much of the
             build/run/test loop is defined and executed through Kavia.
           </div>
 
-          {LEVELS.map((l) => (
-            <article key={l.n} className={styles.levelSection} id={`level-${l.n}`} aria-label={`Level ${l.n} details`}>
-              <div className={styles.levelHeader}>
-                <div>
-                  <h2 className={styles.levelTitle}>
-                    <span className={styles.levelBadge}>Level {l.n}</span>
-                    {l.title}
-                  </h2>
-                  <p className={styles.levelDesc}>{l.description}</p>
-                </div>
-
-                <div className={styles.levelMeta}>
-                  <span className={styles.metaChip}>
-                    <strong>Engagement</strong> {l.n}/4
-                  </span>
-                  <span className={styles.metaChip}>
-                    <strong>Phases</strong> A–D
-                  </span>
-                </div>
-              </div>
-
-              <div className={styles.phaseGrid} aria-label={`Phases for level ${l.n}`}>
-                {PHASES.map((p) => (
-                  <section
-                    key={p.key}
-                    className={styles.phaseCard}
-                    id={`level-${l.n}-phase-${p.key}`}
-                    aria-label={`Level ${l.n} phase ${p.key}`}
+          <div className={styles.levelTabsWrap} aria-label="Levels tabs">
+            <div className={styles.levelTabs} role="tablist" aria-label="Engagement levels" onKeyDown={onTabKeyDown}>
+              {LEVELS.map((l, idx) => {
+                const selected = l.n === activeLevel;
+                return (
+                  <button
+                    key={l.n}
+                    type="button"
+                    ref={(el) => {
+                      tabRefs.current[idx] = el;
+                    }}
+                    className={styles.levelTab}
+                    role="tab"
+                    aria-selected={selected}
+                    aria-controls={`level-panel-${l.n}`}
+                    id={`level-tab-${l.n}`}
+                    tabIndex={selected ? 0 : -1}
+                    data-active={selected ? "true" : "false"}
+                    onClick={() => setActiveLevel(l.n)}
                   >
-                    <div className={styles.phaseCardTop}>
-                      <div className={styles.phaseCardTitle}>
-                        <span className={styles.phaseIconLarge} aria-hidden="true">
-                          {p.icon}
-                        </span>
-                        <div>
-                          <div className={styles.phaseHeading}>
-                            Phase {p.key}: {p.name}
-                          </div>
-                          <div className={styles.phaseOneLiner}>{p.oneLiner}</div>
-                        </div>
-                      </div>
+                    <span className={styles.levelTabPill}>L{l.n}</span>
+                    <span className={styles.levelTabText}>
+                      <span className={styles.levelTabTitle}>{l.title}</span>
+                      <span className={styles.levelTabSub}>{l.short}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-
-                    </div>
-
-                    <ul className={styles.bullets} aria-label={`Outcomes for Level ${l.n} Phase ${p.key}`}>
-                      {l.phases[p.key].map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
+          <article
+            className={styles.levelSection}
+            id={`level-panel-${active.n}`}
+            role="tabpanel"
+            aria-labelledby={`level-tab-${active.n}`}
+            aria-label={`Level ${active.n} details`}
+          >
+            <div className={styles.levelHeader}>
+              <div>
+                <h2 className={styles.levelTitle}>
+                  <span className={styles.levelBadge}>Level {active.n}</span>
+                  {active.title}
+                </h2>
+                <p className={styles.levelDesc}>{active.description}</p>
               </div>
-            </article>
-          ))}
+
+              <div className={styles.levelMeta}>
+                <span className={styles.metaChip}>
+                  <strong>Engagement</strong> {active.n}/4
+                </span>
+                <span className={styles.metaChip}>
+                  <strong>Phases</strong> A–D
+                </span>
+              </div>
+            </div>
+
+            <div className={styles.phaseGrid} aria-label={`Phases for level ${active.n}`}>
+              {PHASES.map((p) => (
+                <section key={p.key} className={styles.phaseCard} aria-label={`Level ${active.n} phase ${p.key}`}>
+                  <div className={styles.phaseCardTop}>
+                    <div className={styles.phaseCardTitle}>
+                      <span className={styles.phaseIconLarge} aria-hidden="true">
+                        {p.icon}
+                      </span>
+                      <div>
+                        <div className={styles.phaseHeading}>
+                          Phase {p.key}: {p.name}
+                        </div>
+                        <div className={styles.phaseOneLiner}>{p.oneLiner}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul className={styles.bullets} aria-label={`Outcomes for Level ${active.n} Phase ${p.key}`}>
+                    {active.phases[p.key].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </article>
         </div>
       </section>
     </main>
