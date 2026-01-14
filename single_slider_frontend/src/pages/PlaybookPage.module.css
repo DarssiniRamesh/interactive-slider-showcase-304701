@@ -1,0 +1,398 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 18px 44px 18px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+  color: var(--k-text);
+  font-weight: 900;
+}
+
+.subtitle {
+  margin: 8px 0 0 0;
+  color: var(--k-muted);
+  line-height: 1.5;
+  max-width: 90ch;
+}
+
+.headerActions {
+  display: flex;
+  gap: 10px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--k-text);
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+  font-weight: 800;
+}
+
+.backLink:hover {
+  transform: translateY(-1px);
+}
+
+.backLink:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 14px;
+  border-radius: var(--k-radius-lg);
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
+  overflow: hidden;
+}
+
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  padding: 14px;
+  border-right: 1px solid var(--k-border);
+  background: linear-gradient(180deg, rgba(255, 247, 240, 1) 0%, rgba(255, 255, 255, 0.92) 100%);
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--k-border);
+  }
+}
+
+.sidebarHeader {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.72);
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.levelNav {
+  display: grid;
+  gap: 10px;
+}
+
+.levelBtn {
+  appearance: none;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 14px;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 14px rgba(17, 24, 39, 0.06);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.levelBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.08);
+}
+
+.levelBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+}
+
+.levelBtn[data-active="true"] {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.14), rgba(255, 255, 255, 0.92));
+}
+
+.levelBtnTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.levelPill {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.16);
+  color: rgba(122, 47, 16, 0.95);
+  font-weight: 900;
+  font-size: 12px;
+}
+
+.levelBtnTitle {
+  font-weight: 900;
+  color: var(--k-text);
+  letter-spacing: -0.01em;
+  font-size: 13px;
+}
+
+.levelBtnSub {
+  color: var(--k-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.sidebarDivider {
+  height: 1px;
+  background: rgba(17, 24, 39, 0.12);
+  margin: 12px 0;
+}
+
+.phaseNav {
+  display: grid;
+  gap: 8px;
+}
+
+.phaseBtn {
+  appearance: none;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.phaseBtn:hover {
+  border-color: rgba(17, 24, 39, 0.22);
+}
+
+.phaseBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+}
+
+.phaseIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.phaseBtnText {
+  display: grid;
+  gap: 2px;
+}
+
+.phaseKey {
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(122, 47, 16, 0.95);
+}
+
+.phaseName {
+  font-size: 12px;
+  color: var(--k-text);
+  font-weight: 700;
+}
+
+.content {
+  padding: 16px;
+}
+
+.callout {
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.12);
+  border-radius: 14px;
+  padding: 10px 12px;
+  color: rgba(17, 24, 39, 0.88);
+  margin-bottom: 14px;
+}
+
+.levelSection {
+  border-top: 1px solid rgba(17, 24, 39, 0.10);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.levelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.levelTitle {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  font-weight: 950;
+  color: var(--k-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.levelBadge {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.levelDesc {
+  margin: 8px 0 0 0;
+  color: rgba(17, 24, 39, 0.82);
+  line-height: 1.55;
+  max-width: 95ch;
+  font-size: 13.5px;
+}
+
+.levelMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.metaChip {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  color: var(--k-muted);
+}
+
+.metaChip strong {
+  color: var(--k-text);
+  font-weight: 900;
+}
+
+.phaseGrid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .phaseGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.phaseCard {
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 6px 14px rgba(17, 24, 39, 0.06);
+}
+
+.phaseCardTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.phaseCardTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.phaseIconLarge {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.phaseHeading {
+  font-weight: 950;
+  color: var(--k-text);
+  letter-spacing: -0.01em;
+}
+
+.phaseOneLiner {
+  color: var(--k-muted);
+  font-size: 12.5px;
+  margin-top: 2px;
+}
+
+.copyLinkBtn {
+  appearance: none;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--k-text);
+  font-size: 12px;
+}
+
+.copyLinkBtn:hover {
+  border-color: rgba(17, 24, 39, 0.22);
+}
+
+.copyLinkBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+}
+
+.bullets {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(17, 24, 39, 0.86);
+  line-height: 1.55;
+  font-size: 13.5px;
+}
+
+.bullets li {
+  margin: 6px 0;
+}

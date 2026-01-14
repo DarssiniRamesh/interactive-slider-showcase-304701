@@ -1,0 +1,339 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 18px 44px 18px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.02em;
+  color: var(--k-text);
+  font-weight: 800;
+}
+
+.subtitle {
+  margin: 8px 0 0 0;
+  color: var(--k-muted);
+  line-height: 1.5;
+  max-width: 80ch;
+}
+
+.headerActions {
+  display: flex;
+  gap: 10px;
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--k-text);
+  border: 1px solid var(--k-border);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.18), rgba(255, 255, 255, 0.94));
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+  font-weight: 700;
+}
+
+.primaryLink:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.10);
+}
+
+.primaryLink:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+}
+
+.shell {
+  border-radius: var(--k-radius-lg);
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
+  overflow: hidden;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--k-border);
+  background: linear-gradient(180deg, rgba(255, 247, 240, 1) 0%, rgba(255, 255, 255, 0.92) 100%);
+  flex-wrap: wrap;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pill {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(122, 47, 16, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--k-muted);
+  font-size: 12px;
+}
+
+.badge strong {
+  color: var(--k-text);
+  font-weight: 800;
+}
+
+.tip {
+  color: var(--k-muted);
+  font-size: 12px;
+}
+
+.kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 11px;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 2px 6px;
+  color: rgba(17, 24, 39, 0.85);
+  white-space: nowrap;
+}
+
+.panel {
+  padding: 16px;
+}
+
+.sliderRow {
+  border: 1px solid var(--k-border);
+  border-radius: var(--k-radius-lg);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
+  padding: 14px;
+  position: relative;
+}
+
+.sliderLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  color: var(--k-muted);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.sliderValue {
+  color: var(--k-text);
+  font-weight: 800;
+}
+
+.slider {
+  width: 100%;
+  accent-color: var(--k-amber);
+}
+
+.slider:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+  border-radius: 10px;
+}
+
+.stops {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.stop {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.stopDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.22);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.stopDot[data-active="true"] {
+  background: var(--k-amber);
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
+}
+
+.stopLabel {
+  font-size: 11px;
+  color: var(--k-muted);
+  font-weight: 700;
+}
+
+.levelGrid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 880px) {
+  .levelGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.levelCard {
+  border: 1px solid var(--k-border);
+  border-radius: var(--k-radius-lg);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 14px rgba(17, 24, 39, 0.08);
+  padding: 14px;
+}
+
+.levelCard[data-active="true"] {
+  border-color: rgba(245, 158, 11, 0.55);
+  box-shadow: 0 12px 24px rgba(245, 158, 11, 0.10);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.12), rgba(255, 255, 255, 0.94));
+}
+
+.levelCardTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.levelChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--k-border);
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 800;
+  margin-right: 8px;
+}
+
+.levelCardTitle {
+  font-weight: 900;
+  color: var(--k-text);
+  letter-spacing: -0.01em;
+}
+
+.levelCardSubtitle {
+  margin-top: 6px;
+  color: var(--k-muted);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.phaseRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 520px) {
+  .phaseRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.phaseChip {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  min-height: 44px;
+}
+
+.phaseIcon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.16);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.phaseText {
+  display: grid;
+  gap: 1px;
+}
+
+.phaseKey {
+  color: rgba(122, 47, 16, 0.95);
+  font-weight: 900;
+  font-size: 12px;
+}
+
+.phaseLabel {
+  color: var(--k-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.footer {
+  margin-top: 14px;
+  border-top: 1px solid var(--k-border);
+  padding-top: 12px;
+}
+
+.footerText {
+  margin: 0;
+  color: var(--k-muted);
+  font-size: 12.5px;
+}
+
+.inlineLink {
+  color: var(--k-blue);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+.inlineLink:focus-visible {
+  outline: none;
+  box-shadow: var(--k-focus);
+  border-radius: 8px;
+}
