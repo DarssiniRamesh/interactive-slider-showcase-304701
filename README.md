@@ -1,1 +1,3 @@
-# interactive-slider-showcase-304701
+# Project Repository
+
+This is the initial README file for the project.
