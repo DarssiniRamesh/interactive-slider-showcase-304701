@@ -32,10 +32,10 @@ const PHASES = [
 const LEVELS = [
   {
     n: 1,
-    title: "Code Generation with Local Build",
-    short: "No manifest; local build & local test",
+    title: "Code Generation with Local Validation",
+    short: "You run builds locally; Kavia generates code and docs.",
     description:
-      "You connect a repo and use Kavia primarily for code generation. Builds and tests are run locally by the developer.",
+      "You run builds locally; Kavia generates code and docs.",
     phases: {
       A: ["Goal articulation and success criteria", "Constraints, scope, and risks", "High-level implementation plan"],
       B: ["Feature spec / design notes", "Module-wise breakdown", "Acceptance criteria and review checkpoints"],
@@ -45,10 +45,10 @@ const LEVELS = [
   },
   {
     n: 2,
-    title: "Manifest-based Build (Run Locally)",
-    short: "Build defined via manifest; still run locally",
+    title: "CI-Ready Build Governance",
+    short: "Standard build commands defined; compile issues blocked early.",
     description:
-      "A manifest defines build commands (and potentially CI steps). Kavia can optimize generation for compilation correctness.",
+      "Standard build commands defined; compile issues blocked early.",
     phases: {
       A: ["Confirm build targets via manifest", "Identify compile/config risks", "Plan emphasizes no-compilation-errors"],
       B: ["Docs include build-impact decisions", "Implementation plan includes config changes", "Criteria includes build checks"],
@@ -58,10 +58,10 @@ const LEVELS = [
   },
   {
     n: 3,
-    title: "Manifest + Preview/Run Through Kavia",
-    short: "Runtime preview feedback + collaborative review",
+    title: "Preview-Backed Runtime Validation",
+    short: "Preview verifies runtime behavior and speeds review.",
     description:
-      "In addition to manifest-defined builds, you run/preview through Kavia to catch runtime issues and iterate faster.",
+      "Preview verifies runtime behavior and speeds review.",
     phases: {
       A: ["Define critical runtime scenarios", "Capture flows to validate (startup, navigation)", "Plan includes runtime checkpoints"],
       B: ["Document runtime behaviors + acceptance criteria", "Highlight integration touchpoints", "Structure for stakeholder review"],
@@ -71,10 +71,10 @@ const LEVELS = [
   },
   {
     n: 4,
-    title: "Fully Managed (Build + Run + Tests Through Kavia)",
-    short: "End-to-end managed execution loop",
+    title: "Fully Managed Execution & Test Automation",
+    short: "Builds, previews, and tests run within Kavia.",
     description:
-      "Kavia manages the full loop: generate code, build, run, and execute tests. Highest engagement and strongest validation.",
+      "Builds, previews, and tests run within Kavia.",
     phases: {
       A: ["Define end-to-end definition of done", "Clarify operational constraints (env/secrets/tools)", "Plan schedules automated verification"],
       B: ["Specs include commands + expected outputs", "Flow documents align with automation", "Review checkpoints tied to managed results"],
