@@ -295,7 +295,7 @@
 
 .phaseText {
   display: grid;
-  gap: 1px;
+  gap: 0;
 }
 
 .phaseKey {

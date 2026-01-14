@@ -3,16 +3,32 @@ import { Link } from "react-router-dom";
 import styles from "./LevelsPage.module.css";
 
 const LEVELS = [
-  { n: 1, title: "Local generation", subtitle: "No manifest; you build/test locally" },
-  { n: 2, title: "Manifest build", subtitle: "Build defined via manifest; still run locally" },
-  { n: 3, title: "Preview + runtime", subtitle: "Run/preview through Kavia for feedback" },
-  { n: 4, title: "Fully managed", subtitle: "Build + run + tests through Kavia" }
+  {
+    n: 1,
+    title: "Code Generation with Local Validation",
+    subtitle: "You run builds locally; Kavia generates code and docs."
+  },
+  {
+    n: 2,
+    title: "CI-Ready Build Governance",
+    subtitle: "Standard build commands defined; compile issues blocked early."
+  },
+  {
+    n: 3,
+    title: "Preview-Backed Runtime Validation",
+    subtitle: "Preview verifies runtime behavior and supports fast review."
+  },
+  {
+    n: 4,
+    title: "Fully Managed Execution & Test Automation",
+    subtitle: "Builds, previews, and tests executed and iterated by Kavia."
+  }
 ];
 
 const PHASES = [
   { key: "A", label: "Analyze", icon: "🔎" },
   { key: "B", label: "Design", icon: "🧭" },
-  { key: "C", label: "Build", icon: "🧩" },
+  { key: "C", label: "Implement", icon: "🧩" },
   { key: "D", label: "Verify", icon: "✅" }
 ];
 
@@ -113,7 +129,6 @@ function LevelsPage() {
                       </span>
                       <span className={styles.phaseText}>
                         <span className={styles.phaseKey}> {p.key} </span>
-                        <span className={styles.phaseLabel}>{p.label}</span>
                       </span>
                     </div>
                   ))}
